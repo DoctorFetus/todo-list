@@ -10,8 +10,8 @@ function App() {
     const todoListTitle: string = "What to learn";
 
     const [tasks, setTasks] = useState<Array<TaskType>>([
-        {id: v1(), title: "HTML&CSS", isDone: true},
-        {id: v1(), title: "JS/ES6&TS", isDone: true},
+        {id: v1(), title: "HTML&CSS", isDone: false},
+        {id: v1(), title: "JS/ES6&TS", isDone: false},
         {id: v1(), title: "REACT", isDone: false},
         {id: v1(), title: "REDUX", isDone: false},
     ])
@@ -27,6 +27,10 @@ function App() {
             isDone: false
         }
         setTasks([newTask, ...tasks])
+    }
+
+    const changeTaskStatus = (taskId: string, newIsDoneValue: boolean) => {
+        setTasks(tasks.map(t => t.id === taskId ? {...t, isDone: newIsDoneValue} : t))
     }
 
     const [filter, setFilter] = useState<FilterValuesType>("all")
@@ -54,6 +58,8 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      changeTaskStatus={changeTaskStatus}
+                      filter={filter}
             />
         </div>
     );
