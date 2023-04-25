@@ -5,10 +5,12 @@ type TodoListPropsType = {
     title: string;
     tasks: Array<TaskType>;
     filter: FilterValuesType
-    removeTask: (taskID: string) => void
-    changeFilter: (filter: FilterValuesType) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (id: string, newIsDoneValue: boolean) => void
+    removeTask: (todolistID: string, taskID: string) => void
+    changeFilter: (todolistID: string, filter: FilterValuesType) => void
+    addTask: (todolistID: string, title: string) => void
+    changeTaskStatus: (todolistID: string, id: string, isDone: boolean) => void
+    todolistID: string
+    removeTodolist: (todolistID: string) => void
 }
 
 export type TaskType = {
@@ -34,8 +36,8 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
     }
     const tasksJSXElements: Array<JSX.Element> = props.tasks.map((task: TaskType) => {
 
-        const removeTask = () => props.removeTask(task.id)
-        const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked)
+        const removeTask = () => props.removeTask(props.todolistID, task.id)
+        const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(props.todolistID, task.id, e.currentTarget.checked)
 
         const taskClasses = task.isDone ? "taskIsDone" : "task"
         return (
@@ -66,7 +68,7 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
     const addTaskHandler = () => {
         const trimmedTitle = title.trim()
         if (trimmedTitle) {
-            props.addTask(title)
+            props.addTask(props.todolistID, title)
         } else {
             setError(true)
         }
@@ -74,13 +76,15 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
     }
 
     const addTaskOnKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && !isBtnDisabled && addTaskHandler()
-    const handlerCreator = (filter: FilterValuesType) => () => props.changeFilter(filter)
+    const handlerCreator = (todolistID: string, filter: FilterValuesType) => () => props.changeFilter(todolistID, filter)
+    const removeTodolist = () => props.removeTodolist(props.todolistID)
 
     const inputClasses = error || isTitleLengthTooLong ? "inputError" : ""
 
     return (
         <div className="todolist">
             <h3>{props.title}</h3>
+            <button onClick={removeTodolist}>del</button>
             <div>
                 <input className={inputClasses}
                     placeholder={"Please, enter title"}
@@ -100,9 +104,9 @@ const TodoList: React.FC<TodoListPropsType> = (props) => {
                 {tasksJSXElements}
             </ul>
             <div className="filterBtnWrapper">
-                <button className={props.filter == "all" ? "filterBtnActive" : "btn"} onClick={handlerCreator("all")}>All</button>
-                <button className={props.filter == "active" ? "filterBtnActive" : "btn"} onClick={handlerCreator("active")}>Active</button>
-                <button className={props.filter == "completed" ? "filterBtnActive" : "btn"} onClick={handlerCreator("completed")}>Completed</button>
+                <button className={props.filter == "all" ? "filterBtnActive" : "btn"} onClick={handlerCreator(props.todolistID, "all")}>All</button>
+                <button className={props.filter == "active" ? "filterBtnActive" : "btn"} onClick={handlerCreator(props.todolistID, "active")}>Active</button>
+                <button className={props.filter == "completed" ? "filterBtnActive" : "btn"} onClick={handlerCreator(props.todolistID, "completed")}>Completed</button>
             </div>
         </div>
     )
