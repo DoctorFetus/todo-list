@@ -95,7 +95,7 @@ function App() {
         const newTodolistID = v1()
         const newTodolist: TodolistType = {id: newTodolistID, title: newTitle, filter: "all"}
         setTodolists([newTodolist, ...todolists])
-        // setTasks({...tasks,[newTodolistID]:[]})
+        setTasks({...tasks,[newTodolistID]:[]})
     }
 
     const updateTask = (todolistId: string, taskId: string, updateTitle: string) => {
@@ -129,7 +129,7 @@ function App() {
                             if (tl.filter === "completed") {
                                 tasksForTodolist = allTodolistTasks.filter(t => t.isDone);
                             }
-
+                            debugger
                             return <Grid item key={tl.id}>
                                 <Paper elevation={3} style={{padding: "20px"}}>
                                     <Todolist
