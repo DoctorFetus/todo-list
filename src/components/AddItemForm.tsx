@@ -1,10 +1,12 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
-type PropsType={
-      callBack:(newTitle:string)=>void
+type PropsType = {
+    callBack: (newTitle: string) => void
 }
 
-export const AddItemForm = (props:PropsType) => {
+export const AddItemForm = (props: PropsType) => {
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
@@ -29,15 +31,27 @@ export const AddItemForm = (props:PropsType) => {
         }
     }
 
+    const muiStyles = {
+        maxWidth: '38px',
+        maxHeight: '38px',
+        minWidth: '38px',
+        minHeight: '38px',
+        // backgroundColor: "black"
+    }
+
     return (
         <div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? "error" : ""}
+            <TextField value={title}
+                       onChange={onChangeHandler}
+                       onKeyPress={onKeyPressHandler}
+                       label={error ? "Title is required" : "Type here"}
+                       variant="outlined"
+                       size={"small"}
+                       error={!!error}
             />
-            <button onClick={addTask}>+</button>
-            {error && <div className="error-message">{error}</div>}
+            <Button style={muiStyles}
+                    variant={"contained"}
+                    onClick={addTask}>+</Button>
         </div>
 
     );
