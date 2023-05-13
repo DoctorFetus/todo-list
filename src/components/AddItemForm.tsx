@@ -26,7 +26,7 @@ export const AddItemForm = (props: PropsType) => {
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
-        if (e.charCode === 13) {
+        if (e.key === "Enter") {
             addTask();
         }
     }
@@ -36,14 +36,14 @@ export const AddItemForm = (props: PropsType) => {
         maxHeight: '38px',
         minWidth: '38px',
         minHeight: '38px',
-        // backgroundColor: "black"
+        marginLeft: "5px"
     }
 
     return (
         <div>
             <TextField value={title}
                        onChange={onChangeHandler}
-                       onKeyPress={onKeyPressHandler}
+                       onKeyDown={onKeyPressHandler}
                        label={error ? "Title is required" : "Type here"}
                        variant="outlined"
                        size={"small"}
