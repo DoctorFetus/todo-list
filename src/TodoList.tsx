@@ -1,11 +1,11 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
+import SuperCheckbox from "./components/SuperCheckbox";
 
 export type TaskType = {
     id: string
@@ -46,6 +46,10 @@ export function Todolist(props: PropsType) {
         props.updateTodolistTitle(props.id, updateTitle)
     }
 
+    const changeStatusHandler = (taskID: string, isDone: boolean) => {
+            props.changeTaskStatus(taskID, isDone, props.id);
+    }
+
     return <div>
         <h3>
 
@@ -61,14 +65,13 @@ export function Todolist(props: PropsType) {
             {
                 props.tasks.map(t => {
                     const onClickHandler = () => props.removeTask(t.id, props.id)
-                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        let newIsDoneValue = e.currentTarget.checked;
-                        props.changeTaskStatus(t.id, newIsDoneValue, props.id);
-                    }
-
 
                     return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <Checkbox onChange={onChangeHandler} checked={t.isDone} color={"success"}/>
+                        <SuperCheckbox
+                            callback={(isDone) => changeStatusHandler(t.id, isDone)}
+                            checked={t.isDone}
+                            color={"success"}
+                        />
                         <EditableSpan oldTitle={t.title}
                                       callBack={(updateTitle) => updateTaskHandler(t.id, updateTitle)}/>
                         <IconButton onClick={onClickHandler} aria-label="delete">
