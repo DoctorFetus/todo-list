@@ -15,14 +15,12 @@ import {
     updateTodolistTitleAC
 } from "./reducers/todolists-reducer";
 import {
-    addNewTodolistTasksAC,
     addTaskAC,
     changeStatusAC,
     removeTaskAC,
-    removeTodolistTasksAC,
-    taskReducer,
+    tasksReducer,
     updateTaskTitleAC
-} from "./reducers/task-reducer";
+} from "./reducers/tasks-reducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -45,7 +43,7 @@ function App() {
             {id: todolistId2, title: "What to buy", filter: "all"}
         ])
 
-    const [tasks, dispatchTasks] = useReducer(taskReducer, {
+    const [tasks, dispatchTasks] = useReducer(tasksReducer, {
         [todolistId1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
             {id: v1(), title: "JS", isDone: false}
@@ -67,16 +65,17 @@ function App() {
         dispatchTodolists(changeFilterAC(todolistId, value))
     }
     function removeTodolist(id: string) {
-        dispatchTodolists(removeTodolistAC(id))
-        dispatchTasks(removeTodolistTasksAC(id))
+        const action = removeTodolistAC(id)
+        dispatchTodolists(action)
+        dispatchTasks(action)
     }
     function addTask(title: string, todolistId: string) {
         dispatchTasks(addTaskAC(todolistId, title))
     }
-    const addTodolists = (newTitle: string) => {
-        const newTodolistID = v1()
-        dispatchTodolists(addTodolistAC(newTodolistID, newTitle))
-        dispatchTasks(addNewTodolistTasksAC(newTodolistID))
+    const addTodolist = (newTitle: string) => {
+        const action = addTodolistAC(newTitle)
+        dispatchTodolists(action)
+        dispatchTasks(action)
     }
     const updateTask = (todolistId: string, taskId: string, updateTitle: string) => {
         dispatchTasks(updateTaskTitleAC(todolistId, taskId, updateTitle))
@@ -91,7 +90,7 @@ function App() {
             <ButtonAppBar/>
             <Container fixed>
                 <Grid container style={{padding: "30px"}}>
-                    <AddItemForm callBack={addTodolists}/>
+                    <AddItemForm callBack={addTodolist}/>
                 </Grid>
                 <Grid container spacing={5}>
                     {
@@ -105,7 +104,6 @@ function App() {
                             if (tl.filter === "completed") {
                                 tasksForTodolist = allTodolistTasks.filter(t => t.isDone);
                             }
-                            debugger
                             return <Grid item key={tl.id}>
                                 <Paper elevation={3} style={{padding: "20px"}}>
                                     <Todolist
