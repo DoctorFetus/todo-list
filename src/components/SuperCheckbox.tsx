@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC} from 'react';
+import React, {ChangeEvent, FC, memo} from 'react';
 import Checkbox from "@mui/material/Checkbox";
 
 type SuperCheckboxType = {
@@ -8,19 +8,17 @@ type SuperCheckboxType = {
 
 }
 
-const SuperCheckbox: FC<SuperCheckboxType> = ({callback, checked, color }) => {
+const SuperCheckbox: FC<SuperCheckboxType> = memo(({callback, checked, color }) => {
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         callback(e.currentTarget.checked)
     }
-
-
     return (
         <Checkbox
             onChange={onChangeHandler}
             checked={checked}
             color={color}/>
     );
-};
+})
 
 export default SuperCheckbox;
