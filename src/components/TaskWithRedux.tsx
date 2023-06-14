@@ -13,12 +13,7 @@ export type TaskPropsType = {
     todolistID: string
 }
 
-const Task = memo(({
-                       task,
-                       todolistID
-                   }: TaskPropsType) => {
-
-    console.log("TaskWithRedux")
+const Task = memo(({task, todolistID}: TaskPropsType) => {
 
     const dispatch = useDispatch()
 
