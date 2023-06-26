@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import axios from "axios"
 import {todolistApi} from "../api/todolist-api";
 
 export default {
-    title: 'API'
+    title: 'API/Todolist'
 }
 
-const settings = { withCredentials: true}
 
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)

@@ -1,11 +1,4 @@
-import axios from "axios"
-
-const settings = { withCredentials: true}
-
-const instance = axios.create({
-    baseURL: "https://social-network.samuraijs.com/api/1.1/",
-    withCredentials: true
-})
+import {instance} from "./instance";
 
 
 export const todolistApi = {
