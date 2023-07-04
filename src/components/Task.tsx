@@ -3,7 +3,7 @@ import SuperCheckbox from "./SuperCheckbox";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {TaskType} from "../Todolist";
+import {TaskType} from "../api/task-api";
 
 
 export type TaskPropsType = {
@@ -20,10 +20,10 @@ const Task = memo(({
                        removeTask,
                    }: TaskPropsType) => {
 
-    return <li className={task.isDone ? "is-done" : ""}>
+    return <li className={task.completed ? "is-done" : ""}>
         <SuperCheckbox
             callback={(isDone) => changeTaskStatus(task.id, isDone)}
-            checked={task.isDone}
+            checked={task.completed}
             color={"success"}
         />
         <EditableSpan oldTitle={task.title}

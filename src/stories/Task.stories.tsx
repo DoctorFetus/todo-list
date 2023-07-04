@@ -16,7 +16,7 @@ const meta: Meta<typeof Task> = {
         changeTaskStatus: action('Status changed inside Task'),
         updateTask: action('Title changed inside Task'),
         removeTask: action('Remove Button clicked changed inside Task'),
-        task: {id: '12wsdewfijdei', title: 'JS', isDone: false},
+        task: {id: '12wsdewfijdei', title: 'JS', completed: false, todoListId: "todolistId1"},
     }
 };
 
@@ -26,13 +26,13 @@ type Story = StoryObj<typeof Task>;
 
 export const TaskIsDoneStory: Story = {
     args: {
-        task: {id: '12wsdewfijdei2343', title: 'JS', isDone: true},
+        task: {id: '12wsdewfijdei2343', title: 'JS', completed: true, todoListId: "todolistId1"},
     },
 };
 
 export const TaskIsNotDoneStory: Story = {
     args: {
-        task: {id: '12wsdewfijdei2343', title: 'CSS', isDone: false},
+        task: {id: '12wsdewfijdei2343', title: 'CSS', completed: false, todoListId: "todolistId1"},
     },
 };
 
@@ -40,7 +40,7 @@ const TaskWithHook = (args: TaskPropsType) => {
     const [task, setTask] = useState(args.task)
 
     const changeTaskStatus = () => {
-        setTask({...args.task, isDone: !task.isDone})
+        setTask({...args.task, completed: !task.completed})
     }
 
     const changeTaskTitle = (taskID: string, title: string) => {

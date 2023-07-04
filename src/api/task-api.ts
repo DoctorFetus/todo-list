@@ -2,7 +2,7 @@ import {instance} from "./instance";
 
 export const tasksApi = {
     getTasks(todolistId: string) {
-        return instance.get<ResponseType<TaskType[]>>(`todo-lists/${todolistId}/tasks`)
+        return instance.get<ResponseType<{items: TaskType[]}>>(`todo-lists/${todolistId}/tasks`)
     },
     addTask(todolistId: string, title: string) {
         return instance.post<ResponseType>(`todo-lists/${todolistId}/tasks`, {title})
@@ -15,18 +15,18 @@ export const tasksApi = {
     }
 }
 
-type TaskType = {
-    description: string
+export type TaskType = {
+    description?: string
     title: string
     completed: boolean
-    status: number
-    priority: number
-    startDate: Date
-    deadline: Date
+    status?: number
+    priority?: number
+    startDate?: Date
+    deadline?: Date
     id: string
     todoListId: string
-    order: number
-    addedDate: Date
+    order?: number
+    addedDate?: Date
 }
 
 type ResponseType<T={}> = {
@@ -35,7 +35,7 @@ type ResponseType<T={}> = {
     data: T
 }
 
-type TaskRequestType = {
+export type TaskRequestType = {
     title?: string
     description?: string
     completed?: boolean

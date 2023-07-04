@@ -6,9 +6,9 @@ import {
     updateTodolistTitleAC
 } from './todolists-reducer';
 import {v1} from 'uuid';
-import {FilterValuesType, TodolistType} from '../../App';
+import {FilterValuesType, OldTodolistType} from '../../App';
 
-let startState: Array<TodolistType>,
+let startState: Array<OldTodolistType>,
     todolistId1: string,
     todolistId2: string
 

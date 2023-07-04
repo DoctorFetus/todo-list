@@ -5,7 +5,7 @@ import {ReduxStoreProviderDecorator} from "../common/ReduxStoreProviderDecorator
 import TaskWithRedux from "../components/TaskWithRedux";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../Redux/store";
-import {TaskType} from "../Todolist";
+import {TaskType} from "../api/task-api";
 
 const meta: Meta<typeof TaskWithRedux> = {
     title: 'TODOLISTS/TaskWithRedux',
